@@ -6,67 +6,29 @@ Playbook jest przystosowany do systemów z SELinuxem w trybie *enforcing*.
 
 Żeby móc użyć tego playbooka musisz:
 
-- wpisać swoje hosty do pliku `hosts` i mieścić je w grupie `ba_srvs`. No i oczywiście zapewnić komunijację po `ssh`. Ja łączyłem się z rootem, kluczem  bez hasła, ale to jest Ansible, więc można to zmienić :-) 
-- Ustawić zmienne `lun` i `latest_ba_tar` na odpowiednie dla środoiska.
+- ustawić lub przekazać zmienne:
+     - `latest_ba_url` - wskazuje skąd pobrać tara
+     - `latest_ba_tar` - lokalna nazwa tara z paczkami rpm klienta BA
 
 ## Opis zmiennych
 
-Wszyskie zmienne są w pliku `roles/ba_srv/vars/main.yaml`.
+Wszyskie zmienne są w pliku `vars/main.yaml`.
 
- - **LUN** - Ustawić na coś użytecznego. Testowałem to na `vdb`  bo target był na KVMie. W tum miejscu można podać np LUNach z macierzy w postaci `/dev/mapper/freindly_name`.
 
-     `lun: "/dev/vdb"` 
-- **latest_ba_tar** - Ta zmienna powinna wskazywać na paczkę tar umieszczoną w katalogu `files/` i ściągniętą z [IBM](http://ftp.software.ibm.com/storage/tivoli-storage-management/maintenance/client/).
+- **www_root** - *Document root* serwera Lighttpd. Domyślnie podkatalog `/var/www/lighttpd`.
+- **repo_dir** - podkatalog `{{ www_root }}`, do którego zostaną skopiowane pakiety RPM i gdzie zostianie utorzone repo.
 
-     `latest_ba_tar: "8.1.17.0-TIV-TSMBAC-LinuxX86.tar"`
+     `repo_dir: "{{ www_root }}/ba"`
 
-- **VG** - Nazwa grupy wolumenów (LVM) do założenia na LUNie.
+- **arch_dir** - podkatalog `{{ www_root }}`, do którego zostanie pobrana paczka z IBM
 
-     `vg: "repovg"`
+     `arch_dir: "{{ www_root }}/ba_arch"`
 
-- **LV** - Nazwa wolumenu logicznego pod filesystem dla repozytorium.
-
-     `lv: "repolv"`
-
-- **www_mnt** - Punkt montowania filesystemu `/dev/mapper/{{ vg }}/{{ lv }}` i jednocześnie *Server Root* serwera Lighttpd.
-
-     `www_mnt: "/var/www"`
-
-- **doc_root** - *Document root* serwera Lighttpd. Domyślnie podkatalog `{{ www_mnt }}/lighttpd`.
-
-`doc_root: "{{ www_mnt }}/lighttpd"`
-
-- **ba_root** - podkatalog `{{ doc_root }}`, do którego zostaną skopiowane pakiety RPM i gdzie zostianie utorzone repo.
-
-     `ba_root: "{{ doc_root }}/ba"`
-
-- **srv_pkgs** - lista pakietów jakie trzeba zainstalować w ramach przygotowania serwera WWW.
-
-     ```
-     srv_pkgs:
-       - lighttpd
-       - createrepo_c
-       - lvm2
-       - vim-enhanced
-       - tar
-       - unzip
-       - gzip
-       - python3-libselinux
-       - python3-libsemanage
-       - policycoreutils-python-utils
-     ```
 
 - **se_lnx** - kontroluje czy SELinux jest w trybie *enforcing*. Serwer w trybie *permissive* albo *disabled* jest zepsuty, więc nie ruszać!
 
      `se_lnx: True`
 
-- **fw_services** - dziurki do otwarcia w firewallu. NAzwy usług zgodne z `firewalld`.
-
-     ```
-     fw_services:
-       - http
-       - https
-     ```
 
 ## Zadania w playbooku `ba_srv_inst.yaml`
 

@@ -4,13 +4,13 @@
 
   - name: Status repozytorium
     stat:
-      path: "{{ ba_root }}/repodata"
+      path: "{{ repo_dir }}/repodata"
     register: repo
 
   - name: Unikanie nadpisania istniejącego repozytorium
     assert:
-      fail_msg: "Repozytorium {{ ba_root }}/repodata istnieje. Pierdolę, nie robię."
-      success_msg: "Nie znaleziono katalogu {{ ba_root }}/repodata. Kontynuję konfigurację"
+      fail_msg: "Repozytorium {{ repo_dir }}/repodata istnieje. Pierdolę, nie robię."
+      success_msg: "Nie znaleziono katalogu {{ repo_dir }}/repodata. Kontynuję konfigurację"
     when: repo.stat.exists
 
 
