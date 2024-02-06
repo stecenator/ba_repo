@@ -41,7 +41,7 @@
 
   - name: "Odpakowanie TARa z klientem BA do {{ repo_dir }}"
     unarchive:
-      src: "{{ arch_dir }}/{{ latest_ba_tar }}"
+      remote_src: "{{ arch_dir }}/{{ latest_ba_tar }}"
       dest: "{{ repo_dir }}"
       creates: "{{ repo_dir }}/update.txt"
     become_user: "lighttpd"
@@ -67,6 +67,11 @@
       - "SEC"
       - "HTTPD"
       - "BA"
+
+  - name: Instalacja pakietów tworzenia repozytorium
+    dnf:
+      name: createrepo_c
+      state: latest
 
   - name: "Tworzenie repozytorium RPM w {{ repo_dir }}"
     command: 
