@@ -89,7 +89,7 @@
       - "BA"
       - "REPO"
 
-  - name: "Generowanie pliku repozytorium {{ ba_root }}/ba.repo"
+  - name: "Generowanie pliku repozytorium {{ repo_dir }}/ba.repo"
     template:
       src: ba.repo.j2
       dest: "{{ repo_dir }}/ba.repo"
@@ -100,8 +100,8 @@
       - "BA"
       - "REPO"
 
-  - name: "Ustawianie kontekstu SELinux na {{ doc_root }}"
-    command: restorecon -irv "{{ doc_root }}"
+  - name: "Ustawianie kontekstu SELinux na {{ www_root }}"
+    command: restorecon -irv "{{ www_root }}"
     when: ansible_facts.selinux.status == 'enabled'
     tags:
       - "SEC"
