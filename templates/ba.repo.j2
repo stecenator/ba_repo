@@ -1,7 +1,7 @@
 [SP-BA]
 name=Spectrum Protect Backup/Archive Client
-baseurl=http://{{ ansible_hostname }}/ba/
+baseurl=http://{{ ansible_hostname }}.{{ ansible_facts.domain }}/ba/
 enabled=1
 gpgcheck=1
 skip_if_unavailable=1
-gpgkey=http://{{ ansible_hostname }}/ba/RPM-GPG-KEY-ibmpkg http://{{ ansible_hostname }}/ba/GSKit.pub3.pgp
+gpgkey=http://{{ ansible_hostname }}.{{ ansible_facts.domain }}/ba/{{ gsk_gpg_key }} http://{{ ansible_hostname }}.{{ ansible_facts.domain }}/ba/{{ ba_gpg_key }}
