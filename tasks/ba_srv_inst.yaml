@@ -34,10 +34,16 @@
     tags:
       - "FS"
 
+  - name: Sprawdzanie, czy trzeba sćiągać paczkę z IBM
+    stat:
+      path: "{{ arch_dir }}/{{ latest_ba_tar }}" 
+    register: ba_tar_downloaded
+
   - name: Sciąganie paczki BA z IBM
     get_url:
       url: "{{ latest_ba_url }}"
       dest: "{{ arch_dir }}/{{ latest_ba_tar }}"
+    when: not ba_tar_downloaded.stat.exists
 
   - name: "Odpakowanie TARa z klientem BA do {{ repo_dir }}"
     unarchive:
