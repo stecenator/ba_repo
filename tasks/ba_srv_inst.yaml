@@ -48,7 +48,7 @@
   - name: "Odpakowanie TARa z klientem BA do {{ repo_dir }}"
     unarchive:
       remote_src: yes
-      source: "{{ arch_dir }}/{{ latest_ba_tar }}"
+      src: "{{ arch_dir }}/{{ latest_ba_tar }}"
       dest: "{{ repo_dir }}"
       creates: "{{ repo_dir }}/update.txt"
     become_user: "lighttpd"
