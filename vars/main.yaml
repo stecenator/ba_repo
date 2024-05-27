@@ -5,8 +5,8 @@
 se_lnx: True
 
 
-latest_ba_tar: "8.1.21.0-TIV-TSMBAC-LinuxX86.tar"
-latest_ba_url: "https://www3.software.ibm.com/storage/tivoli-storage-management/maintenance/client/v8r1/Linux/LinuxX86/BA/v8121/8.1.21.0-TIV-TSMBAC-LinuxX86.tar"
+latest_ba_tar: "8.1.22.0-TIV-TSMBAC-LinuxX86.tar"
+latest_ba_url: "https://www3.software.ibm.com/storage/tivoli-storage-management/maintenance/client/v8r1/Linux/LinuxX86/BA/v8122/8.1.22.0-TIV-TSMBAC-LinuxX86.tar"
 
 www_root: "/var/www/lighttpd"
 repo_dir: "{{ www_root }}/ba"

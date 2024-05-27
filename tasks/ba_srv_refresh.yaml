@@ -7,7 +7,7 @@
           path: "{{ ba_root }}/update.txt"
         register: ba_exists
 
-      - name: "Przerwanie playbooka jeśli nie nic do napisania"
+      - name: "Przerwanie playbooka jeśli nie ma nic do napisania"
         fail: 
           msg: "Plik {{ ba_root }}/update.txt nie istnieje. Załóż repozytorium."
         when: ba_exists.stat.exists == False
